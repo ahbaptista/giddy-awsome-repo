@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>simpleapi</name>
 	<packaging>jar</packaging>
-	<description>Simple Api for AWS project</description>
+	<description>Simple Api for environment vars</description>
 
 	<properties>
 		<java.version>1.8</java.version>
