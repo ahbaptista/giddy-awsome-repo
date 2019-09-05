@@ -1,0 +1,31 @@
+version: '3.0'
+services:
+  consul:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-consul
+    stdin_open: True
+    tty: True
+    environment:
+      - "VERSION=${VERSION:-snapshot}"
+      - "ENV=local"
+    ports:
+      - "8500:8500"
+      - "8600:8600"
+      - "8400:8400"
+      - "8301:8301"
+      - "8302:8302"
+  application:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-app
+    stdin_open: True
+    tty: True
+    links:
+      - consul:consul
+    environment:
+      - "VERSION=${VERSION:-snapshot}"
+      - "ENV=local"
+      - "ENVCONSUL_LOCAL_CONFIG=log_level=debug"
+    ports:
+      - "8080:8080"

@@ -1,0 +1,15 @@
+FROM hashicorp/envconsul:alpine
+RUN apk add --update \
+    python3 bash \
+  && rm -rf /var/cache/apk/* \
+  && ln -s /usr/bin/pip3 /usr/bin/pip \
+  && ln -s /usr/bin/python3 /usr/bin/python
+
+ADD app /opt/src
+#ADD envconsul-config.hcl /etc/envconsul-config.hcl
+WORKDIR /opt/src
+
+RUN pip install -r /opt/src/requirements.txt
+ADD app/entrypoint.sh /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["bash", "-c", "/usr/bin/entrypoint.sh"]

@@ -1,0 +1,3 @@
+FROM consul:latest
+USER root
+EXPOSE 8500 8600 8400 8301 8302
