@@ -29,3 +29,18 @@ services:
       - "ENVCONSUL_LOCAL_CONFIG=log_level=debug"
     ports:
       - "8080:8080"
+
+  application-java:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-app-java
+    stdin_open: True
+    tty: True
+    links:
+      - consul:consul
+    environment:
+      - "VERSION=${VERSION:-snapshot}"
+      - "ENV=local"
+      - "ENVCONSUL_LOCAL_CONFIG=log_level=debug"
+    ports:
+      - "8081:8081"
