@@ -1,0 +1,15 @@
+FROM amazoncorretto
+RUN yum install -y \
+  curl wget bash tree unzip
+
+ADD https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip /opt/envconsul/
+
+RUN cd /opt/envconsul && unzip /opt/envconsul/envconsul_0.9.0_linux_amd64.zip && \
+  ls -alsht /opt/envconsul/ && \
+  mv /opt/envconsul/envconsul /bin/envconsul
+
+ADD app_java /opt/src
+WORKDIR /opt/src
+
+ADD app_java/entrypoint.sh /usr/bin/entrypoint.sh
+ENTRYPOINT ["bash", "-c", "/usr/bin/entrypoint.sh"]
